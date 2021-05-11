@@ -1,8 +1,6 @@
 package com.ruan.zzProjetoFinalAtos.Controllers;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruan.zzProjetoFinalAtos.CRUD.ClienteCrud;
 import com.ruan.zzProjetoFinalAtos.Models.Cliente;
 import com.ruan.zzProjetoFinalAtos.Repositories.ClienteRepository;
 
@@ -29,6 +28,8 @@ description = "REST APIs relacionada ao cadastro de Clientes")
 @RequestMapping("/clienteAPI")
 public class ClienteController {
 	
+	static ClienteCrud clienteCrud = new ClienteCrud();
+	
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
@@ -36,7 +37,11 @@ public class ClienteController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping
 	public List<Cliente> listarClientes(){
-		return clienteRepository.findAll();
+		clienteCrud.setup();
+		//clienteCrud.listAll();
+		//clienteRepository.findAll();
+		
+		return clienteCrud.listAll();
 	}
 	
 	@ApiOperation(value = "Adicionar", response = Iterable.class, tags = "Cliente")
@@ -49,21 +54,21 @@ public class ClienteController {
 		}
 		cliente.setPago(0);
 		cliente.setRestante(cliente.getTotal());
+		
+		clienteCrud.setup();
+		clienteCrud.create(cliente);
+		
 		return clienteRepository.save(cliente);
-	}
-	
-	@ApiOperation(value = "Busca Cliente Nome", response = Iterable.class, tags = "Cliente")
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@GetMapping("/getNome/{nome}")
-	public List<Cliente> buscaClienteNome(@PathVariable String nome){
-		return clienteRepository.findByNome(nome);
 	}
 	
 	@ApiOperation(value = "Busca Cliente ID", response = Iterable.class, tags = "Cliente")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/get/{id}")
-	public Optional<Cliente> buscaClienteId(@PathVariable Long id){
-		return clienteRepository.findById(id);
+	public Cliente buscaClienteId(@PathVariable Long id){
+		clienteCrud.setup();
+		//clienteRepository.findById(id);
+		
+		return clienteCrud.read(id); 
 	}
 	
 	@ApiOperation(value = "Deletar Cliente", response = Iterable.class, tags = "Cliente")
@@ -71,14 +76,17 @@ public class ClienteController {
 	@DeleteMapping("/deletar/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletarCliente(@PathVariable Long id) {
-		clienteRepository.deleteById(id);
+		clienteCrud.setup();
+		clienteCrud.delete(id);
+		//clienteRepository.deleteById(id);
 	}
 	
 	@ApiOperation(value = "Atualizar", response = Iterable.class, tags = "Cliente")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PutMapping("/atualizar/{id}")
 	public Cliente atualizaCliente(@org.springframework.web.bind.annotation.RequestBody Cliente cliente, @PathVariable Long id) {
-		Cliente c = clienteRepository.getOne(id);
+		clienteCrud.setup();
+		Cliente c = clienteCrud.read(id);
 		if (c == null) {
 			return null;
 		}
@@ -102,27 +110,21 @@ public class ClienteController {
 		} else {
 			c.setRestante(cliente.getRestante()+cliente.getTotal());
 		}
+		
+		clienteCrud.update(c);
 
 		return clienteRepository.save(c);
-	}
-	
-	@ApiOperation(value = "Busca Cliente Data", response = Iterable.class, tags = "Cliente")
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@GetMapping("/dataCobranca/{dataCobranca}")
-	public List<Cliente> buscaClienteData(@PathVariable String dataCobranca){
-		return clienteRepository.findByDataCobranca(dataCobranca);
 	}
 	
 	@ApiOperation(value = "Pagamento", response = Iterable.class, tags = "Cliente")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PutMapping("/pagamento/{id}")
 	public Cliente pagamentoCliente(String dataCobranca, float pago, @PathVariable Long id) {
-		Cliente c = clienteRepository.getOne(id);
+		clienteCrud.setup();
+		Cliente c = clienteCrud.read(id);
 		if (c == null) {
 			return null;
 		}
-		
-		System.out.println(dataCobranca + " " + pago);
 
 		c.setNome(c.getNome());
 		c.setCpf(c.getCpf());
@@ -139,6 +141,8 @@ public class ClienteController {
 		c.setTelefone(c.getCelular());
 		c.setPago(c.getPago()+pago);
 		c.setRestante(c.getRestante()-pago);
+		
+		clienteCrud.update(c);
 
 		return clienteRepository.save(c);
 	}

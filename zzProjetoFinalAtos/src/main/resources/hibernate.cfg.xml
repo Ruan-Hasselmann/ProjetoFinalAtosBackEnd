@@ -12,6 +12,7 @@
 		<property name="show_sql">true</property>
 
 		<mapping class="com.ruan.zzProjetoFinalAtos.Models.Vendedor" />
+		<mapping class="com.ruan.zzProjetoFinalAtos.Models.Cliente" />
 
 	</session-factory>
 </hibernate-configuration>

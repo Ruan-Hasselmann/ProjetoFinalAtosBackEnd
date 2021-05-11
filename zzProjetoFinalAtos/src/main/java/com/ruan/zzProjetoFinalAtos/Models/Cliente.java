@@ -5,14 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
+@Table(name = "Cliente")
 public class Cliente {
 	
 	@ApiModelProperty(notes = "Id Cliente", name = "id", required = false)
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -75,7 +78,10 @@ public class Cliente {
 	@ApiModelProperty(notes = "Restante", name="restante", required=false)
 	@Column(nullable = true)
     private float restante;
-
+	
+	public Cliente() {
+		
+	}
 	public Long getId() {
 		return id;
 	}

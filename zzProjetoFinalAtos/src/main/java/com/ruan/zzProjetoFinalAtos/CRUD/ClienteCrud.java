@@ -1,4 +1,4 @@
-package com.ruan.zzProjetoFinalAtos.Controllers;
+package com.ruan.zzProjetoFinalAtos.CRUD;
 
 import java.util.List;
 
@@ -8,12 +8,12 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.ruan.zzProjetoFinalAtos.Models.Vendedor;
+import com.ruan.zzProjetoFinalAtos.Models.Cliente;
 
-public class VendedorCrud {
-	/*protected SessionFactory sessionFactory;
+public class ClienteCrud {
+	public SessionFactory sessionFactory;
 
-	protected void setup() {
+	public void setup() {
 		// code to load Hibernate Session factory
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
 		// .configure() // configures settings from hibernate.cfg.xml
@@ -26,74 +26,74 @@ public class VendedorCrud {
 
 		}
 	}
-
-	protected void exit() {
+	
+	public void exit() {
 		// code to close Hibernate Session factory
 	}
-
-	protected void create(Vendedor vendedor) {
+	
+	public void create(Cliente cliente) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		session.save(vendedor);
+		session.save(cliente);
 
 		session.getTransaction().commit();
 		session.close();
 	}
-
-	protected Vendedor read(int id) {
+	
+	public Cliente read(Long id) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		Vendedor vendedor = session.get(Vendedor.class, id);
+		Cliente cliente = session.get(Cliente.class, id);
 
 		session.close();
-		return vendedor;
+		return cliente;
 	}
-
-	protected void update(Vendedor vendedor) {
+	
+	public void update(Cliente cliente) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		session.update(vendedor);
+		session.update(cliente);
 
 		session.getTransaction().commit();
 		session.close();
 	}
-
-	protected void delete(int id) {
-		Vendedor vendedor = new Vendedor();
-		vendedor.setId((long) id);
+	
+	public void delete(Long id) {
+		Cliente cliente = new Cliente();
+		cliente.setId(id);
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		session.delete(vendedor);
+		session.delete(cliente);
 
 		session.getTransaction().commit();
 		session.close();
 	}
-
-	public List<Vendedor> listAll() {
+	
+	public List<Cliente> listAll() {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
 		// leitura via Hibernate Query Language (HQL).
-		List<Vendedor> vendedor = session.createQuery("from vendedor", Vendedor.class).getResultList();
+		List<Cliente> listaCliente = session.createQuery("from Cliente", Cliente.class).getResultList();
 
 		session.getTransaction().commit();
 		session.close();
 
-		return vendedor;
+		return listaCliente;
 	}
-
-	public Vendedor queryWhere(String nome) {
+	
+	public Cliente queryWhere(String nome) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		Vendedor vendedor = session.createQuery("from vendedor where nome='" + nome +"'", Vendedor.class).getSingleResult();
+		Cliente cliente = session.createQuery("from Cliente where nome='" + nome +"'", Cliente.class).getSingleResult();
 
 		session.close();
-		return vendedor;
-	}*/
+		return cliente;
+	}
 }

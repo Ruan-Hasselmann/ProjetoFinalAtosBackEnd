@@ -1,8 +1,6 @@
 package com.ruan.zzProjetoFinalAtos.Controllers;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruan.zzProjetoFinalAtos.CRUD.VendedorCrud;
 import com.ruan.zzProjetoFinalAtos.Models.Vendedor;
 import com.ruan.zzProjetoFinalAtos.Repositories.VendedorRepository;
 
@@ -29,7 +28,7 @@ description = "REST APIs relacionada ao cadastro de Vendedor")
 @RequestMapping("/vendedorAPI")
 public class VendedorController {
 	
-	//static VendedorCrud vendedorCrud = new VendedorCrud();
+	static VendedorCrud vendedorCrud = new VendedorCrud();
 	
 	@Autowired
 	private VendedorRepository vendedorRepository;
@@ -38,10 +37,11 @@ public class VendedorController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping
 	public List<Vendedor> listarVendedores(){
-		//vendedorCrud.setup();
+		vendedorCrud.setup();
 		//vendedorCrud.listAll();
-		
-		return vendedorRepository.findAll();
+		//vendedorRepository.findAll();
+
+		return vendedorCrud.listAll();
 	}
 	
 	@ApiOperation(value = "Adicionar", response = Iterable.class, tags = "Vendedor")
@@ -53,30 +53,22 @@ public class VendedorController {
 			vendedor.setTelefone("(00) 0000-0000");
 		}
 		
-		//vendedorCrud.setup();
-		//vendedorCrud.create(vendedor);
+		vendedorCrud.setup();
+		vendedorCrud.create(vendedor);
 		
-		return vendedorRepository.save(vendedor);
-	}
 	
-	@ApiOperation(value = "Busca Vendedor", response = Iterable.class, tags = "Vendedor")
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	@GetMapping("/getNome/{nome}")
-	public List<Vendedor> buscaVendedor(@PathVariable String nome){
-		//vendedorCrud.setup();
-		//vendedorCrud.queryWhere(nome);
-		
-		return vendedorRepository.findByNome(nome);
+		return vendedorRepository.save(vendedor);
 	}
 	
 	@ApiOperation(value = "Busca Vendedor ID", response = Iterable.class, tags = "Vendedor")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/get/{id}")
-	public Optional<Vendedor> buscaVendedor(@PathVariable Long id){
-		//vendedorCrud.setup();
-		//vendedorCrud.read(Integer.parseInt(id+""));
+	public Vendedor buscaVendedor(@PathVariable Long id){
+		vendedorCrud.setup();
+		//vendedorCrud.read(id);
+		//vendedorRepository.findById(id);
 		
-		return vendedorRepository.findById(id);
+		return vendedorCrud.read(id);
 	}
 	
 	@ApiOperation(value = "Deletar Vendedor", response = Iterable.class, tags = "Vendedor")
@@ -84,17 +76,17 @@ public class VendedorController {
 	@DeleteMapping("/delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletarVendedor(@PathVariable Long id) {
-		//vendedorCrud.setup();
-		//vendedorCrud.delete(Integer.parseInt(id+""));
-		
-		vendedorRepository.deleteById(id);
+		vendedorCrud.setup();
+		vendedorCrud.delete(id);
+		//vendedorRepository.deleteById(id);
 	}
 	
 	@ApiOperation(value = "Atualizar", response = Iterable.class, tags = "Vendedor")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PutMapping("/atualizar/{id}")
 	public Vendedor atualizarVendedor(@org.springframework.web.bind.annotation.RequestBody Vendedor vendedor, @PathVariable Long id) {
-		Vendedor v = vendedorRepository.getOne(id);
+		vendedorCrud.setup();
+		Vendedor v = vendedorCrud.read(id);
 		if (v == null) {
 			return null;
 		}
@@ -111,8 +103,8 @@ public class VendedorController {
 		v.setUf(vendedor.getUf());
 		v.setNumeroCasa(vendedor.getNumeroCasa());
 		
-		//vendedorCrud.setup();
-		//vendedorCrud.update(v);
+		
+		vendedorCrud.update(v);
 
 		return vendedorRepository.save(v);
 	}

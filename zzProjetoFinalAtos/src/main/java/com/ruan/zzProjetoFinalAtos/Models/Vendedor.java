@@ -10,12 +10,12 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name = "vendedor")
+@Table(name = "Vendedor")
 public class Vendedor {
 	
-	@ApiModelProperty(notes = "Id do Vendedor", name = "id", required = false)
+	@ApiModelProperty(notes = "Id do Vendedor", name = "id")
 	@Id
-	@Column(name = "ID")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -63,6 +63,9 @@ public class Vendedor {
 	@Column(nullable = false)
 	private String numeroCasa;
 	
+	public Vendedor() {
+		
+	}
 	public Long getId() {
 		return id;
 	}
