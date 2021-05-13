@@ -95,9 +95,9 @@ public class ClienteController {
 		c.setCpf(cliente.getCpf());
 		c.setRg(cliente.getRg());
 		c.setCep(cliente.getCep());
-		c.setRua(cliente.getRua());
+		c.setLogradouro(cliente.getLogradouro());
 		c.setBairro(cliente.getBairro());
-		c.setCidade(cliente.getCidade());
+		c.setLocalidade(cliente.getLocalidade());
 		c.setUf(cliente.getUf());
 		c.setNumeroCasa(cliente.getNumeroCasa());
 		c.setDataCobranca(cliente.getDataCobranca());
@@ -130,9 +130,9 @@ public class ClienteController {
 		c.setCpf(c.getCpf());
 		c.setRg(c.getRg());
 		c.setCep(c.getCep());
-		c.setRua(c.getRua());
+		c.setLogradouro(c.getLogradouro());
 		c.setBairro(c.getBairro());
-		c.setCidade(c.getCidade());
+		c.setLocalidade(c.getLocalidade());
 		c.setUf(c.getUf());
 		c.setNumeroCasa(c.getNumeroCasa());
 		c.setDataCobranca(dataCobranca);

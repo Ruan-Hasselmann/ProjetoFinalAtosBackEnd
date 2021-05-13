@@ -97,9 +97,9 @@ public class VendedorController {
 		v.setCelular(vendedor.getCelular());
 		v.setTelefone(vendedor.getTelefone());
 		v.setCep(vendedor.getCep());
-		v.setRua(vendedor.getRua());
+		v.setLogradouro(vendedor.getLogradouro());
 		v.setBairro(vendedor.getBairro());
-		v.setCidade(vendedor.getCidade());
+		v.setLocalidade(vendedor.getLocalidade());
 		v.setUf(vendedor.getUf());
 		v.setNumeroCasa(vendedor.getNumeroCasa());
 		

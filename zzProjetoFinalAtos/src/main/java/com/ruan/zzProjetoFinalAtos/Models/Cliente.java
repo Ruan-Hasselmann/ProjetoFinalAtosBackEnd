@@ -35,17 +35,17 @@ public class Cliente {
 	@Column(nullable = false)
     private String cep;
 	
-	@ApiModelProperty(notes = "Rua", name="rua", required=true)
+	@ApiModelProperty(notes = "Logradouro", name="logradouro", required=true)
 	@Column(nullable = false)
-    private String rua;
+    private String logradouro;
 	
 	@ApiModelProperty(notes = "Bairro", name="bairro", required=true)
 	@Column(nullable = false)
     private String bairro;
 	
-	@ApiModelProperty(notes = "Cidade", name="cidade", required=true)
+	@ApiModelProperty(notes = "Localidade", name="localidade", required=true)
 	@Column(nullable = false)
-    private String cidade;
+    private String localidade;
 	
 	@ApiModelProperty(notes = "Uf", name="uf", required=true)
 	@Column(nullable = false)
@@ -122,14 +122,14 @@ public class Cliente {
 		this.cep = cep;
 	}
 
-	public String getRua() {
-		return rua;
+	public String getLogradouro() {
+		return logradouro;
 	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
+	
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
-
+	
 	public String getBairro() {
 		return bairro;
 	}
@@ -138,14 +138,14 @@ public class Cliente {
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
-
+	
 	public String getUf() {
 		return uf;
 	}

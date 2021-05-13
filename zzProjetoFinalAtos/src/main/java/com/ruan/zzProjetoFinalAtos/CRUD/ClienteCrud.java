@@ -79,7 +79,7 @@ public class ClienteCrud {
 		session.beginTransaction();
 
 		// leitura via Hibernate Query Language (HQL).
-		List<Cliente> listaCliente = session.createQuery("from Cliente", Cliente.class).getResultList();
+		List<Cliente> listaCliente = session.createQuery("from Cliente where restante!='0.0'", Cliente.class).getResultList();
 
 		session.getTransaction().commit();
 		session.close();
